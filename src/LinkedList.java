@@ -5,14 +5,16 @@ public class LinkedList<T extends Comparable<T>> {
     public void revert() {
         if (root == null) return;
         if (root.next == null) return;
-
-        LinkedList<T> newList = new LinkedList<>();
+        Node newChildNode = null;
+        Node newNode  = null;
         Node currentNode = root;
         while (currentNode != null) {
-            newList.addAt(0, currentNode.value);
+            newChildNode = newNode;
+            newNode = new Node(currentNode.value);
+            newNode.next = newChildNode;
             currentNode = currentNode.next;
         }
-        root = newList.getNode(0);
+        root = newNode;
     }
 
     public void bubbleSort() {
