@@ -3,25 +3,34 @@ public class LinkedList<T extends Comparable<T>> {
     private int size;
 
     public void revert() {
+        if (root == null) return;
+        if (root.next == null) return;
 
+        LinkedList<T> newList = new LinkedList<>();
+        Node currentNode = root;
+        while (currentNode != null) {
+            newList.addAt(0, currentNode.value);
+            currentNode = currentNode.next;
+        }
+        root = newList.getNode(0);
     }
 
     public void bubbleSort() {
         if (root == null) return;
         if (root.next == null) return;
-        while (true) {
+        boolean sortNeeded = true;
+        while (sortNeeded) {
             Node currentNode = root;
-            boolean isSorted = true;
+            sortNeeded = false;
             while (currentNode.next != null) {
                 if (currentNode.value.compareTo(currentNode.next.value) > 0) {
                     T temp = currentNode.value;
                     currentNode.value = currentNode.next.value;
                     currentNode.next.value = temp;
-                    isSorted = false;
+                    sortNeeded = true;
                 }
                 currentNode = currentNode.next;
             }
-            if (isSorted) return;
         }
     }
 
@@ -196,6 +205,11 @@ public class LinkedList<T extends Comparable<T>> {
         Node next;
 
         Node() {
+        }
+
+        @Override
+        public String toString() {
+            return value.toString();
         }
 
         Node(T value) {
